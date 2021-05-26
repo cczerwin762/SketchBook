@@ -1,5 +1,6 @@
 import tkinter as tk
-from tkinter import PhotoImage
+from tkinter import Frame, Label, Menu, Button, PhotoImage
+import os
 
 class sketchPad():
     def __init__(self,width = 500, height = 500):
@@ -8,9 +9,23 @@ class sketchPad():
         self.width = width
         self.height = height
         self.root = tk.Tk()
+        self.root.overrideredirect(True)
+        self.root.geometry('500x520+200+200')
         self.canvas = tk.Canvas(self.root, height=self.width, width=self.height, bg=self.bgcolor)
+        self.frame = Frame(self.root, width = 500, height = 20, bg = "white", relief = 'raised', bd=2)
+        self.frame.pack(expand=1, fill = 'x')
+        self.close = Button(self.frame, text = 'X', command = self.root.destroy)
+        self.close.pack(side = tk.RIGHT)
+        self.title = Label(self.frame, text="SketchPad")
+        self.title.pack(side = tk.LEFT)
+        self.menu = Menu(self.root)
+        self.file = Menu(self.menu, tearoff = 0)
+        self.menu.add_cascade(label = "File", menu = self.file)
+        # Ok so what needs to be done... - implement menu bar, file and help, implement move window, implement save button
+        # Make into an executable
+        self.root.config(menu=self.menu)
         self.img = None
-        self.canvas.pack()
+        self.canvas.pack(side = tk.BOTTOM)
         self.create()
         self.root.mainloop()
 
