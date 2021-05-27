@@ -9,25 +9,26 @@ class sketchPad():
         self.width = width
         self.height = height
         self.root = tk.Tk()
-        self.root.overrideredirect(True)
-        self.root.geometry('500x520+200+200')
+        self.root.wm_title("SketchPad")
+        self.root.geometry('500x500+200+200')
         self.canvas = tk.Canvas(self.root, height=self.width, width=self.height, bg=self.bgcolor)
-        self.frame = Frame(self.root, width = 500, height = 20, bg = "white", relief = 'raised', bd=2)
-        self.frame.pack(expand=1, fill = 'x')
-        self.close = Button(self.frame, text = 'X', command = self.root.destroy)
-        self.close.pack(side = tk.RIGHT)
-        self.title = Label(self.frame, text="SketchPad")
-        self.title.pack(side = tk.LEFT)
         self.menu = Menu(self.root)
         self.file = Menu(self.menu, tearoff = 0)
+        self.help = Menu(self.menu, tearoff = 0)
         self.menu.add_cascade(label = "File", menu = self.file)
-        # Ok so what needs to be done... - implement menu bar, file and help, implement move window, implement save button
+        self.menu.add_cascade(label = "Help", menu = self.help)
+        self.file.add_command(label = "Save", command=self.save_callback)
+        self.help.add_command(label = "How to Use", command = self.display_help)
+        # Ok so what needs to be done... - implement save button
         # Make into an executable
         self.root.config(menu=self.menu)
         self.img = None
         self.canvas.pack(side = tk.BOTTOM)
+        self.howto = None
+        self.save = None
         self.create()
         self.root.mainloop()
+
 
     def create(self):
         self.img = PhotoImage(width=self.width, height=self.height)
@@ -57,6 +58,22 @@ class sketchPad():
         self.canvas.configure(bg = self.bgcolor)
         self.create()
         self.root.update()
+
+    def save_callback(self):
+        self.save = tk.Tk()
+        self.save.wm_title("Save")
+        self.saveframe = Frame(self.save)
+        self.save.mainloop()
+        #implement
+
+    def display_help(self):
+        self.howto = tk.Tk()
+        self.howto.wm_title("How to Use")
+        self.howtoframe = Frame(self.howto)
+        self.howto.mainloop()
+        print("")
+        #implement
+
 
 
 
